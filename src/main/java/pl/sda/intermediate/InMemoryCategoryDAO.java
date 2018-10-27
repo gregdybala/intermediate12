@@ -1,8 +1,13 @@
 package pl.sda.intermediate;
 
+import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
+import lombok.AccessLevel;
+import lombok.Getter;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -16,6 +21,7 @@ public class InMemoryCategoryDAO {
 
     private static InMemoryCategoryDAO instance;
 
+    @Getter
     private List<Category> categoryList;
 
     private InMemoryCategoryDAO() {
@@ -27,7 +33,7 @@ public class InMemoryCategoryDAO {
         // getResource zwraca URLa, czyli ścieżkę
         try {
             List<String> strings = Files.readAllLines(Paths.get(
-                    this.getClass().getClassLoader().getResource("kategorie.txt").toURI()));
+                    this.getClass().getClassLoader().getResource("kategorie.txt").toURI()), Charset.forName("UNICODE"));
             List<Category> categories = new ArrayList<>();
 
             int counter = 1;
@@ -79,6 +85,7 @@ public class InMemoryCategoryDAO {
     }
 
     private int calculateDepth(String line) {
+        if (line.startsWith(" "));
         return line.split("\\S")[0].length();
     }
 
